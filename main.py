@@ -46,15 +46,17 @@ class WhiteBoard(QLabel):
 class ReviewTool(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setGeometry(500, 250, 750, 600)
-        self.vlayout = QVBoxLayout()
-        self.button = QPushButton("Click Here")
-        self.button.setMinimumHeight(300)
-        board = WhiteBoard()
         widget = QWidget()
-        self.vlayout.addWidget(board)
-        self.vlayout.addWidget(self.button)
+        board = WhiteBoard()
+        self.vlayout = QVBoxLayout()
         widget.setLayout(self.vlayout)
+        self.vlayout.addWidget(board)
+
+        self.button_layout = QHBoxLayout()
+        self.button = QPushButton("Click Here")
+        self.button_layout.addWidget(self.button)
+        widget.setLayout(self.button_layout)
+
         self.setCentralWidget(widget)
 
 
