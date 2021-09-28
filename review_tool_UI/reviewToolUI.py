@@ -89,11 +89,16 @@ class Ui_Form(object):
         self.verticalFrame_2.setMaximumSize(QSize(120, 16777215))
         self.verticalLayout_6 = QVBoxLayout(self.verticalFrame_2)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+
+        self.verticalLayout_6.addLayout(self.verticalLayout_3)
+
         self.palette_layout = QGridLayout()
         self.palette_layout.setObjectName(u"palette_layout")
         self.palette_layout.setHorizontalSpacing(10)
         self.palette_layout.setVerticalSpacing(5)
-        self.palette_layout.setContentsMargins(0, 73, -1, 0)
+        self.palette_layout.setContentsMargins(0, 0, -1, 0)
 
         self.verticalLayout_6.addLayout(self.palette_layout)
 

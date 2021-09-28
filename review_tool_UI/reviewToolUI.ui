@@ -125,12 +125,15 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
+            <layout class="QVBoxLayout" name="verticalLayout_3"/>
+           </item>
+           <item>
             <layout class="QGridLayout" name="palette_layout">
              <property name="leftMargin">
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>73</number>
+              <number>0</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>

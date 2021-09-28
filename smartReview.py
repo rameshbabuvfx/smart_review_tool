@@ -56,7 +56,7 @@ class QPaletteButton(QPushButton):
 
     def __init__(self, color):
         super().__init__()
-        self.setFixedSize(QSize(40, 40))
+        self.setFixedSize(QSize(35, 35))
         self.color = color
         self.setStyleSheet("background-color: {};".format(color))
 
@@ -66,8 +66,9 @@ class ReviewTool(Ui_Form, QWidget):
         super(ReviewTool, self).__init__()
         self.setupUi(self)
         self.image_board = ImageBoard()
+        self.resize(self.image_board.image.width(), self.image_board.image.height())
         self.verticalLayout_5.addWidget(self.image_board)
-
+        self.color_pushbutton.clicked.connect(self.open_color_panel)
         self.add_palette_button()
 
     def add_palette_button(self):
@@ -78,6 +79,10 @@ class ReviewTool(Ui_Form, QWidget):
                 self.palette_layout.addWidget(palette_button, 0, 1)
             else:
                 self.palette_layout.addWidget(palette_button)
+
+    def open_color_panel(self):
+        color_dialog = QColorDialog.getColor()
+        self.image_board.set_pen_color(color_dialog)
 
 
 if __name__ == '__main__':
