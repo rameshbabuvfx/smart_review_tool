@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Window(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -33,7 +34,14 @@ class Window(QtWidgets.QMainWindow):
     def mouseMoveEvent(self, event):
         if event.buttons() and QtCore.Qt.LeftButton and self.drawing:
             painter = QtGui.QPainter(self.imageDraw)
-            painter.setPen(QtGui.QPen(self.brushColor, self.brushSize, QtCore.Qt.SolidLine, QtCore.Qt.RoundCap, QtCore.Qt.RoundJoin))
+            painter.setPen(QtGui.QPen(
+                self.brushColor,
+                self.brushSize,
+                QtCore.Qt.SolidLine,
+                QtCore.Qt.RoundCap,
+                QtCore.Qt.RoundJoin
+            )
+            )
             if self.change:
                 r = QtCore.QRect(QtCore.QPoint(), self._clear_size*QtCore.QSize())
                 r.moveCenter(event.pos())
@@ -69,6 +77,7 @@ class Window(QtWidgets.QMainWindow):
             QtWidgets.QApplication.setOverrideCursor(cursor)
         else:
             QtWidgets.QApplication.restoreOverrideCursor()
+
 
 if __name__ == "__main__":
     import sys

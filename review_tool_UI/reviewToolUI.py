@@ -17,7 +17,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(1210, 750)
+        Form.resize(1214, 730)
         self.verticalLayout_2 = QVBoxLayout(Form)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -45,14 +45,12 @@ class Ui_Form(object):
 
         self.brush_size_slider = QSlider(self.horizontalFrame)
         self.brush_size_slider.setObjectName(u"brush_size_slider")
+        self.brush_size_slider.setMaximumSize(QSize(150, 16777215))
+        self.brush_size_slider.setMinimum(3)
+        self.brush_size_slider.setMaximum(20)
         self.brush_size_slider.setOrientation(Qt.Horizontal)
 
         self.horizontalLayout.addWidget(self.brush_size_slider)
-
-        self.color_pushbutton = QPushButton(self.horizontalFrame)
-        self.color_pushbutton.setObjectName(u"color_pushbutton")
-
-        self.horizontalLayout.addWidget(self.color_pushbutton)
 
         self.font_style_combobox = QComboBox(self.horizontalFrame)
         self.font_style_combobox.setObjectName(u"font_style_combobox")
@@ -89,8 +87,33 @@ class Ui_Form(object):
         self.verticalFrame_2.setMaximumSize(QSize(120, 16777215))
         self.verticalLayout_6 = QVBoxLayout(self.verticalFrame_2)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.pen_pushbutton = QPushButton(self.verticalFrame_2)
+        self.pen_pushbutton.setObjectName(u"pen_pushbutton")
+
+        self.horizontalLayout_3.addWidget(self.pen_pushbutton)
+
+        self.eraser_pushbutton = QPushButton(self.verticalFrame_2)
+        self.eraser_pushbutton.setObjectName(u"eraser_pushbutton")
+
+        self.horizontalLayout_3.addWidget(self.eraser_pushbutton)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout_3)
+
         self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(14, -1, 0, -1)
+        self.color_pushbutton = QPushButton(self.verticalFrame_2)
+        self.color_pushbutton.setObjectName(u"color_pushbutton")
+        self.color_pushbutton.setMinimumSize(QSize(0, 70))
+        self.color_pushbutton.setMaximumSize(QSize(70, 16777215))
+        self.color_pushbutton.setStyleSheet(u"")
+
+        self.verticalLayout_3.addWidget(self.color_pushbutton)
+
 
         self.verticalLayout_6.addLayout(self.verticalLayout_3)
 
@@ -120,8 +143,10 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.import_pushbutton.setText(QCoreApplication.translate("Form", u"Import", None))
-        self.color_pushbutton.setText(QCoreApplication.translate("Form", u"color", None))
         self.bold_pushbutton.setText(QCoreApplication.translate("Form", u"Bold", None))
         self.italic_pushbutton.setText(QCoreApplication.translate("Form", u"Italic", None))
+        self.pen_pushbutton.setText(QCoreApplication.translate("Form", u"pen", None))
+        self.eraser_pushbutton.setText(QCoreApplication.translate("Form", u"eraser", None))
+        self.color_pushbutton.setText("")
     # retranslateUi
 
