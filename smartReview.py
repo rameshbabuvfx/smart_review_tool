@@ -43,6 +43,7 @@ class ImageBoard(QWidget):
     def set_pen_color(self, color):
         self.pen_color = color
 
+
     def set_pen_size(self, size):
         self.pen_size = size
 
