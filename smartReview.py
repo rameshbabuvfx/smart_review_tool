@@ -18,10 +18,10 @@ class ImageBoard(QWidget):
         super(ImageBoard, self).__init__()
 
         self.label = QLabel()
-        self.image = QPixmap("review_image.jpg")
+        self.image = QPixmap(800, 600)
+        self.image.fill(Qt.transparent)
         self.label.setMaximumHeight(self.image.height())
         self.label.setMaximumWidth(self.image.width())
-        self.label.setPixmap(self.image)
 
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label)
@@ -33,23 +33,30 @@ class ImageBoard(QWidget):
         self.erase = False
         self._clear_size = 20
 
+    def set_image_label(self, image_path):
+        self.image = image_path
+        self.label.setPixmap(self.image)
+        self.label.setMaximumHeight(self.image.height())
+        self.label.setMaximumWidth(self.image.width())
+        self.update()
+
     def set_pen_color(self, color):
         self.pen_color = color
 
     def set_pen_size(self, size):
         self.pen_size = size
 
-    def set_eraser(self, value):
-        self.erase = value
-
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.last_point = self.label.mapFromParent(event.pos())
+        else:
+            super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
         end_point = self.label.mapFromParent(event.pos())
-        painter = QPainter(self.label.pixmap())
+        painter = QPainter(self.image)
         painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.LosslessImageRendering)
         painter.setPen(
             QPen(
                 QColor(self.pen_color),
@@ -76,6 +83,25 @@ class ImageBoard(QWidget):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.last_point = None
+        else:
+            super().mouseReleaseEvent(event)
+
+    def set_eraser(self, value):
+        self.erase = value
+        if self.erase:
+            pixmap = QPixmap(QSize(1, 1)*self._clear_size)
+            pixmap.fill(Qt.transparent)
+            painter = QPainter(pixmap)
+            painter.setPen(QPen(Qt.black, 2))
+            painter.drawRect(pixmap.rect())
+            painter.end()
+            cursor = QCursor(pixmap)
+            QApplication.setOverrideCursor(cursor)
+        else:
+            QApplication.restoreOverrideCursor()
+
+    def paintEvent(self, event):
+        self.label.setPixmap(self.image)
 
 
 class QPaletteButton(QPushButton):
@@ -91,14 +117,16 @@ class ReviewTool(Ui_Form, QWidget):
     def __init__(self):
         super(ReviewTool, self).__init__()
         self.setupUi(self)
+        self.pixmap = None
         self.image_board = ImageBoard()
-        self.resize(self.image_board.image.width(), self.image_board.image.height())
         self.verticalLayout_5.addWidget(self.image_board)
         self.brush_size_slider.valueChanged.connect(self.set_pen_size)
         self.color_pushbutton.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\color_wheel.png"))
         self.color_pushbutton.clicked.connect(self.open_color_panel)
         self.eraser_pushbutton.clicked.connect(self.enable_eraser)
         self.pen_pushbutton.clicked.connect(self.enable_pen)
+        self.save_pushbutton.clicked.connect(lambda: self.save_image())
+        self.import_pushbutton.clicked.connect(lambda: self.import_image())
         self.add_palette_button()
 
     def add_palette_button(self):
@@ -110,6 +138,12 @@ class ReviewTool(Ui_Form, QWidget):
                 self.palette_layout.addWidget(palette_button, 0, 1)
             else:
                 self.palette_layout.addWidget(palette_button)
+
+    def import_image(self):
+        image_path, _ = QFileDialog.getOpenFileName(self, "import image")
+        self.pixmap = QPixmap(image_path)
+        self.image_board.set_image_label(self.pixmap)
+        self.resize(self.pixmap.width(), self.pixmap.height())
 
     def open_color_panel(self):
         color_dialog = QColorDialog.getColor()
@@ -130,6 +164,13 @@ class ReviewTool(Ui_Form, QWidget):
 
     def enable_pen(self):
         self.image_board.set_eraser(False)
+
+    def save_image(self):
+        file_path, _ = QFileDialog.getSaveFileName(
+            self, "Save Image", "", "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*)"
+        )
+        print(file_path)
+        self.pixmap.save(file_path)
 
 
 if __name__ == '__main__':

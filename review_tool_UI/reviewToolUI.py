@@ -39,6 +39,11 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.import_pushbutton)
 
+        self.save_pushbutton = QPushButton(self.horizontalFrame)
+        self.save_pushbutton.setObjectName(u"save_pushbutton")
+
+        self.horizontalLayout.addWidget(self.save_pushbutton)
+
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
@@ -143,6 +148,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.import_pushbutton.setText(QCoreApplication.translate("Form", u"Import", None))
+        self.save_pushbutton.setText(QCoreApplication.translate("Form", u"save", None))
         self.bold_pushbutton.setText(QCoreApplication.translate("Form", u"Bold", None))
         self.italic_pushbutton.setText(QCoreApplication.translate("Form", u"Italic", None))
         self.pen_pushbutton.setText(QCoreApplication.translate("Form", u"pen", None))

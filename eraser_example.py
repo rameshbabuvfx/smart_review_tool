@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Window(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -9,9 +8,9 @@ class Window(QtWidgets.QMainWindow):
         self.setGeometry(top, left, width, height)
 
         self.image = QtGui.QImage(self.size(), QtGui.QImage.Format_ARGB32)
-        self.image.fill(QtCore.Qt.white)
+        self.image.fill(QtCore.Qt.red)
         self.imageDraw = QtGui.QImage(self.size(), QtGui.QImage.Format_ARGB32)
-        self.imageDraw.fill(QtCore.Qt.transparent)
+        self.imageDraw.fill(QtCore.Qt.red)
 
         self.drawing = False
         self.brushSize = 2
@@ -34,14 +33,7 @@ class Window(QtWidgets.QMainWindow):
     def mouseMoveEvent(self, event):
         if event.buttons() and QtCore.Qt.LeftButton and self.drawing:
             painter = QtGui.QPainter(self.imageDraw)
-            painter.setPen(QtGui.QPen(
-                self.brushColor,
-                self.brushSize,
-                QtCore.Qt.SolidLine,
-                QtCore.Qt.RoundCap,
-                QtCore.Qt.RoundJoin
-            )
-            )
+            painter.setPen(QtGui.QPen(self.brushColor, self.brushSize, QtCore.Qt.SolidLine, QtCore.Qt.RoundCap, QtCore.Qt.RoundJoin))
             if self.change:
                 r = QtCore.QRect(QtCore.QPoint(), self._clear_size*QtCore.QSize())
                 r.moveCenter(event.pos())
