@@ -48,6 +48,11 @@ class Ui_Form(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
+        self.pen_icon_label = QLabel(self.horizontalFrame)
+        self.pen_icon_label.setObjectName(u"pen_icon_label")
+
+        self.horizontalLayout.addWidget(self.pen_icon_label)
+
         self.brush_size_slider = QSlider(self.horizontalFrame)
         self.brush_size_slider.setObjectName(u"brush_size_slider")
         self.brush_size_slider.setMaximumSize(QSize(150, 16777215))
@@ -84,6 +89,7 @@ class Ui_Form(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.verticalLayout_5 = QVBoxLayout()
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(10, -1, 10, -1)
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_5)
 
@@ -92,28 +98,22 @@ class Ui_Form(object):
         self.verticalFrame_2.setMaximumSize(QSize(120, 16777215))
         self.verticalLayout_6 = QVBoxLayout(self.verticalFrame_2)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.pen_pushbutton = QPushButton(self.verticalFrame_2)
-        self.pen_pushbutton.setObjectName(u"pen_pushbutton")
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.horizontalLayout_3.addWidget(self.pen_pushbutton)
-
-        self.eraser_pushbutton = QPushButton(self.verticalFrame_2)
-        self.eraser_pushbutton.setObjectName(u"eraser_pushbutton")
-
-        self.horizontalLayout_3.addWidget(self.eraser_pushbutton)
-
-
-        self.verticalLayout_6.addLayout(self.horizontalLayout_3)
+        self.verticalLayout_6.addItem(self.verticalSpacer_2)
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(14, -1, 0, -1)
+        self.verticalLayout_3.setContentsMargins(14, -1, 14, -1)
+        self.clear_pushbutton = QPushButton(self.verticalFrame_2)
+        self.clear_pushbutton.setObjectName(u"clear_pushbutton")
+
+        self.verticalLayout_3.addWidget(self.clear_pushbutton)
+
         self.color_pushbutton = QPushButton(self.verticalFrame_2)
         self.color_pushbutton.setObjectName(u"color_pushbutton")
-        self.color_pushbutton.setMinimumSize(QSize(0, 70))
+        self.color_pushbutton.setMinimumSize(QSize(70, 70))
         self.color_pushbutton.setMaximumSize(QSize(70, 16777215))
         self.color_pushbutton.setStyleSheet(u"")
 
@@ -129,6 +129,10 @@ class Ui_Form(object):
         self.palette_layout.setContentsMargins(0, 0, -1, 0)
 
         self.verticalLayout_6.addLayout(self.palette_layout)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_6.addItem(self.verticalSpacer)
 
 
         self.horizontalLayout_2.addWidget(self.verticalFrame_2)
@@ -149,10 +153,10 @@ class Ui_Form(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.import_pushbutton.setText(QCoreApplication.translate("Form", u"Import", None))
         self.save_pushbutton.setText(QCoreApplication.translate("Form", u"save", None))
+        self.pen_icon_label.setText("")
         self.bold_pushbutton.setText(QCoreApplication.translate("Form", u"Bold", None))
         self.italic_pushbutton.setText(QCoreApplication.translate("Form", u"Italic", None))
-        self.pen_pushbutton.setText(QCoreApplication.translate("Form", u"pen", None))
-        self.eraser_pushbutton.setText(QCoreApplication.translate("Form", u"eraser", None))
-        self.color_pushbutton.setText("")
+        self.clear_pushbutton.setText(QCoreApplication.translate("Form", u"Clear", None))
+        self.color_pushbutton.setText(QCoreApplication.translate("Form", u"Picker", None))
     # retranslateUi
 
