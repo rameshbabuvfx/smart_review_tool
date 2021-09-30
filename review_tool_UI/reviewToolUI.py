@@ -17,7 +17,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(1214, 730)
+        Form.resize(1204, 763)
         self.verticalLayout_2 = QVBoxLayout(Form)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -103,11 +103,13 @@ class Ui_Form(object):
         self.verticalLayout_6.addItem(self.verticalSpacer_2)
 
         self.verticalLayout_3 = QVBoxLayout()
-        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setSpacing(7)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(14, -1, 14, -1)
         self.clear_pushbutton = QPushButton(self.verticalFrame_2)
         self.clear_pushbutton.setObjectName(u"clear_pushbutton")
+        self.clear_pushbutton.setMinimumSize(QSize(70, 0))
+        self.clear_pushbutton.setMaximumSize(QSize(70, 16777215))
 
         self.verticalLayout_3.addWidget(self.clear_pushbutton)
 

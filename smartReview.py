@@ -115,7 +115,9 @@ class ReviewTool(Ui_Form, QWidget):
 
     def import_image(self):
         self.image_path, _ = QFileDialog.getOpenFileName(self, "import image")
-        self.add_image_label()
+        print(self.image_path)
+        if self.image_path:
+            self.add_image_label()
 
     def add_image_label(self):
         self.pixmap = QPixmap(self.image_path)
