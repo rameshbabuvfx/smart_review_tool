@@ -1,5 +1,3 @@
-import sys
-
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtGui import *
@@ -58,6 +56,7 @@ class DrawingWidget(QWidget):
                 )
             )
             line = QLine(self.last_point, end_point)
+            print(line)
             painter.drawLine(line)
             self.last_point = end_point
             self.update()
@@ -69,5 +68,18 @@ class DrawingWidget(QWidget):
         else:
             super().mouseReleaseEvent(event)
 
+    def keyPressEvent(self, event):
+        print("this is")
+        if event.key() == Qt.Key_Z:
+            print("this is")
+
     def paintEvent(self, event):
         self.label.setPixmap(self.image)
+
+
+# if __name__ == '__main__':
+#     import sys
+#     app = QApplication(sys.argv)
+#     tool = DrawingWidget()
+#     tool.show()
+#     sys.exit(app.exec_())

@@ -21,11 +21,11 @@ class ReviewTool(Ui_Form, QWidget):
         self.setupUi(self)
         self.pixmap = None
         self.text_label = None
+        self.text_label_status = None
         self.image_board = DrawingWidget()
         self.verticalLayout_5.addWidget(self.image_board)
         self.color_pushbutton.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\color_palette.png"))
         self.pen_icon_label.setPixmap(QPixmap(r"D:\PythonProjects\NukePython\smart_review_tool\icons\size.png"))
-
         self.connect_ui()
 
     def connect_ui(self):
@@ -78,9 +78,10 @@ class ReviewTool(Ui_Form, QWidget):
 
     def save_image(self):
         file_path, _ = QFileDialog.getSaveFileName(
-            self, "Save Image", "", "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*)"
+            self, "Save Image", "", "PNG(*.png)"
         )
-        self.pixmap.save(file_path, quality=-1)
+        pix = self.image_board.label.grab()
+        pix.save(file_path, quality=-1)
 
     def launch_text_box(self):
         if not self.text_label:
@@ -113,7 +114,6 @@ class ReviewTool(Ui_Form, QWidget):
             print(event.key())
             self.text_label.close()
             self.text_label = None
-
 
 
 def main():
