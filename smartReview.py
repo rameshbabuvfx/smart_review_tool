@@ -5,6 +5,8 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 
 from review_tool_UI.reviewToolUI import Ui_Form
+from drawingWidget import DrawingWidget
+from paletteButton import QPaletteButton
 
 COLORS = [
             '#000000', '#141923', '#414168', '#3a7fa7', '#35e3e3', '#8fd970', '#5ebb49',
@@ -13,105 +15,40 @@ COLORS = [
         ]
 
 
-class ImageBoard(QWidget):
-    def __init__(self):
-        super(ImageBoard, self).__init__()
-
-        self.label = QLabel()
-        self.image = QPixmap(800, 600)
-        self.image.fill(Qt.transparent)
-        self.label.setMaximumHeight(self.image.height())
-        self.label.setMaximumWidth(self.image.width())
-
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.label)
-        self.setLayout(self.layout)
-
-        self.last_point = None
-        self.pen_color = "#000000"
-        self.pen_size = 2
-
-    def set_image_label(self, image_path):
-        self.image = image_path
-        self.label.setPixmap(self.image)
-        self.label.setMaximumHeight(self.image.height())
-        self.label.setMaximumWidth(self.image.width())
-        self.update()
-
-    def set_pen_color(self, color):
-        self.pen_color = color
-
-    def set_pen_size(self, size):
-        self.pen_size = size
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self.last_point = self.label.mapFromParent(event.pos())
-        else:
-            super().mousePressEvent(event)
-
-    def mouseMoveEvent(self, event):
-        end_point = self.label.mapFromParent(event.pos())
-        painter = QPainter(self.image)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setPen(
-            QPen(
-                QColor(self.pen_color),
-                self.pen_size,
-                Qt.SolidLine,
-                Qt.RoundCap,
-                Qt.RoundJoin
-            )
-        )
-        line = QLine(self.last_point, end_point)
-        painter.drawLine(line)
-        self.last_point = end_point
-        self.update()
-
-    def mouseReleaseEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self.last_point = None
-        else:
-            super().mouseReleaseEvent(event)
-
-    def paintEvent(self, event):
-        self.label.setPixmap(self.image)
-
-
-class QPaletteButton(QPushButton):
-
-    def __init__(self, color):
-        super().__init__()
-        self.setFixedSize(QSize(35, 35))
-        self.color = color
-        self.setStyleSheet("background-color: {};".format(color))
-
-
 class ReviewTool(Ui_Form, QWidget):
     def __init__(self):
         super(ReviewTool, self).__init__()
         self.setupUi(self)
         self.pixmap = None
-        self.image_board = ImageBoard()
+        self.text_label = None
+        self.image_board = DrawingWidget()
         self.verticalLayout_5.addWidget(self.image_board)
-        self.brush_size_slider.valueChanged.connect(self.set_pen_size)
         self.color_pushbutton.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\color_palette.png"))
         self.pen_icon_label.setPixmap(QPixmap(r"D:\PythonProjects\NukePython\smart_review_tool\icons\size.png"))
+
+        self.connect_ui()
+
+    def connect_ui(self):
+        self.brush_size_slider.valueChanged.connect(self.set_pen_size)
         self.color_pushbutton.clicked.connect(self.open_color_panel)
         self.save_pushbutton.clicked.connect(lambda: self.save_image())
         self.import_pushbutton.clicked.connect(lambda: self.import_image())
         self.clear_pushbutton.clicked.connect(lambda: self.add_image_label())
+        self.addtext_pushbutton.clicked.connect(self.launch_text_box)
         self.add_palette_button()
 
     def add_palette_button(self):
         for count, color in enumerate(COLORS):
             palette_button = QPaletteButton(color)
-            palette_button.pressed.connect(lambda c=color: self.image_board.set_pen_color(c))
-            palette_button.pressed.connect(lambda c=color: self.set_button_color(c))
+            self.connect_color_buttons(palette_button, color)
             if count == 1:
                 self.palette_layout.addWidget(palette_button, 0, 1)
             else:
                 self.palette_layout.addWidget(palette_button)
+
+    def connect_color_buttons(self, palette_button, color):
+        palette_button.pressed.connect(lambda: self.image_board.set_pen_color(color))
+        palette_button.pressed.connect(lambda: self.set_button_color(color))
 
     def import_image(self):
         self.image_path, _ = QFileDialog.getOpenFileName(self, "import image")
@@ -143,8 +80,40 @@ class ReviewTool(Ui_Form, QWidget):
         file_path, _ = QFileDialog.getSaveFileName(
             self, "Save Image", "", "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*)"
         )
-        print(file_path)
         self.pixmap.save(file_path, quality=-1)
+
+    def launch_text_box(self):
+        if not self.text_label:
+            self.text_label = QLabel(self)
+            self.text_label.setGeometry(100, 100, 100, 100)
+            self.text_label.setText("move here ksjdbfksf")
+            self.text_label.show()
+            self.text_label_status = True
+
+            dialog = QDialog()
+            self.text_widget = QTextEdit(dialog)
+            self.text_widget.textChanged.connect(self.add_text_label)
+            dialog.exec_()
+
+    def add_text_label(self):
+        label_text = self.text_widget.toPlainText()
+        self.text_label.setText(label_text)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton and self.text_label_status:
+            self.label_active = True
+
+    def mouseMoveEvent(self, event):
+        if self.label_active and self.text_label_status:
+            self.text_label.move(event.pos())
+        self.update()
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Delete:
+            print(event.key())
+            self.text_label.close()
+            self.text_label = None
+
 
 
 def main():

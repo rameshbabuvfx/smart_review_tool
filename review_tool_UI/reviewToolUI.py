@@ -62,25 +62,10 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.brush_size_slider)
 
-        self.font_style_combobox = QComboBox(self.horizontalFrame)
-        self.font_style_combobox.setObjectName(u"font_style_combobox")
+        self.addtext_pushbutton = QPushButton(self.horizontalFrame)
+        self.addtext_pushbutton.setObjectName(u"addtext_pushbutton")
 
-        self.horizontalLayout.addWidget(self.font_style_combobox)
-
-        self.font_size_spinbox = QSpinBox(self.horizontalFrame)
-        self.font_size_spinbox.setObjectName(u"font_size_spinbox")
-
-        self.horizontalLayout.addWidget(self.font_size_spinbox)
-
-        self.bold_pushbutton = QPushButton(self.horizontalFrame)
-        self.bold_pushbutton.setObjectName(u"bold_pushbutton")
-
-        self.horizontalLayout.addWidget(self.bold_pushbutton)
-
-        self.italic_pushbutton = QPushButton(self.horizontalFrame)
-        self.italic_pushbutton.setObjectName(u"italic_pushbutton")
-
-        self.horizontalLayout.addWidget(self.italic_pushbutton)
+        self.horizontalLayout.addWidget(self.addtext_pushbutton)
 
 
         self.verticalLayout.addWidget(self.horizontalFrame)
@@ -156,8 +141,7 @@ class Ui_Form(object):
         self.import_pushbutton.setText(QCoreApplication.translate("Form", u"Import", None))
         self.save_pushbutton.setText(QCoreApplication.translate("Form", u"save", None))
         self.pen_icon_label.setText("")
-        self.bold_pushbutton.setText(QCoreApplication.translate("Form", u"Bold", None))
-        self.italic_pushbutton.setText(QCoreApplication.translate("Form", u"Italic", None))
+        self.addtext_pushbutton.setText(QCoreApplication.translate("Form", u"Add Text", None))
         self.clear_pushbutton.setText(QCoreApplication.translate("Form", u"Clear", None))
         self.color_pushbutton.setText(QCoreApplication.translate("Form", u"Picker", None))
     # retranslateUi

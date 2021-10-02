@@ -107,22 +107,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="font_style_combobox"/>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="font_size_spinbox"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bold_pushbutton">
+          <widget class="QPushButton" name="addtext_pushbutton">
            <property name="text">
-            <string>Bold</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="italic_pushbutton">
-           <property name="text">
-            <string>Italic</string>
+            <string>Add Text</string>
            </property>
           </widget>
          </item>

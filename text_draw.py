@@ -4,32 +4,26 @@ from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 
+from textWidget import TextLabelWidget
+
 
 class TextDraw(QWidget):
     def __init__(self):
         super(TextDraw, self).__init__()
-        self.label = QLabel()
-        self.image = QPixmap("review_image.jpg")
-        self.label.setPixmap(self.image)
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.label)
-        self.setLayout(self.layout)
-        self.draw_text()
+        self.setGeometry(100, 250, 500, 500)
 
-    def draw_text(self):
-        painter = QPainter(self.image)
-        painter.setPen(QPen(QColor(Qt.red), 5))
-        painter.drawText(50, 50, "Kanna")
+        self.label = TextLabelWidget(self)
+
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.move = True
+            self.label_move = True
 
     def mouseMoveEvent(self, event):
+        if self.label_move:
+            self.label.move(event.pos())
 
-
-    def paintEvent(self, event):
-        self.label.setPixmap(self.image)
+        self.update()
 
 
 if __name__ == '__main__':
