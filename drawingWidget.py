@@ -10,9 +10,7 @@ class DrawingWidget(QWidget):
         self.label = QLabel()
         self.image = QPixmap(800, 600)
         self.image.fill(Qt.transparent)
-        self.label.setMaximumHeight(self.image.height())
-        self.label.setMaximumWidth(self.image.width())
-
+        self.setStyleSheet("background-color: red")
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
@@ -24,8 +22,6 @@ class DrawingWidget(QWidget):
     def set_image_label(self, image_path):
         self.image = image_path
         self.label.setPixmap(self.image)
-        self.label.setMaximumHeight(self.image.height())
-        self.label.setMaximumWidth(self.image.width())
         self.update()
 
     def set_pen_color(self, color):
@@ -56,7 +52,6 @@ class DrawingWidget(QWidget):
                 )
             )
             line = QLine(self.last_point, end_point)
-            print(line)
             painter.drawLine(line)
             self.last_point = end_point
             self.update()

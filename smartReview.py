@@ -21,6 +21,7 @@ class ReviewTool(Ui_Form, QWidget):
         self.setupUi(self)
         self.pixmap = None
         self.text_label = None
+        self.label_active = None
         self.text_label_status = None
         self.image_board = DrawingWidget()
         self.verticalLayout_5.addWidget(self.image_board)
@@ -52,7 +53,6 @@ class ReviewTool(Ui_Form, QWidget):
 
     def import_image(self):
         self.image_path, _ = QFileDialog.getOpenFileName(self, "import image")
-        print(self.image_path)
         if self.image_path:
             self.add_image_label()
 
@@ -61,7 +61,9 @@ class ReviewTool(Ui_Form, QWidget):
         if self.pixmap.width() >= 1600 and self.pixmap.height() >= 850:
             self.pixmap = self.pixmap.scaled(1600, 850, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.image_board.set_image_label(self.pixmap)
-        self.resize(self.pixmap.width(), self.pixmap.height())
+        self.image_board.setFixedSize(self.pixmap.size())
+        print(self.geometry())
+        self.setMaximumSize(self.pixmap.size())
 
     def open_color_panel(self):
         color_dialog = QColorDialog.getColor()
@@ -78,9 +80,10 @@ class ReviewTool(Ui_Form, QWidget):
 
     def save_image(self):
         file_path, _ = QFileDialog.getSaveFileName(
-            self, "Save Image", "", "PNG(*.png)"
+            self, "Save Image", "", "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*)"
         )
-        pix = self.image_board.label.grab()
+        print(self.image_board.frameGeometry())
+        pix = self.grab(self.image_board.geometry())
         pix.save(file_path, quality=-1)
 
     def launch_text_box(self):
