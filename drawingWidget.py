@@ -11,6 +11,7 @@ class DrawingWidget(QWidget):
         self.image = QPixmap(800, 600)
         self.image.fill(Qt.transparent)
         self.layout = QVBoxLayout()
+        self.layout.setContentsMargins(0, 0, 0, 0)
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
 
