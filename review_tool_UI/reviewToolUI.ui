@@ -83,7 +83,7 @@
          <item>
           <widget class="QLabel" name="pen_icon_label">
            <property name="text">
-            <string/>
+            <string>Size</string>
            </property>
           </widget>
          </item>
@@ -91,12 +91,12 @@
           <widget class="QSlider" name="brush_size_slider">
            <property name="maximumSize">
             <size>
-             <width>150</width>
+             <width>100</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="minimum">
-            <number>3</number>
+            <number>10</number>
            </property>
            <property name="maximum">
             <number>20</number>
@@ -113,6 +113,26 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="text_color_pushbutton">
+           <property name="text">
+            <string>Text Color</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFontComboBox" name="font_combo_box">
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="font_size_combox"/>
+         </item>
         </layout>
        </widget>
       </item>
@@ -121,7 +141,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="leftMargin">
-           <number>10</number>
+           <number>3</number>
           </property>
           <property name="rightMargin">
            <number>10</number>

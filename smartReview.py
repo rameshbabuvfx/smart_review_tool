@@ -24,9 +24,10 @@ class ReviewTool(Ui_Form, QWidget):
         self.label_active = None
         self.text_label_status = None
         self.image_board = DrawingWidget()
+        self.font_size_combox.addItems([str(size) for size in range(25)])
+        self.font_size_combox.setCurrentIndex(10)
         self.verticalLayout_5.addWidget(self.image_board)
         self.color_pushbutton.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\color_palette.png"))
-        self.pen_icon_label.setPixmap(QPixmap(r"D:\PythonProjects\NukePython\smart_review_tool\icons\size.png"))
         self.connect_ui()
 
     def connect_ui(self):
@@ -36,6 +37,9 @@ class ReviewTool(Ui_Form, QWidget):
         self.import_pushbutton.clicked.connect(lambda: self.import_image())
         self.clear_pushbutton.clicked.connect(lambda: self.add_image_label())
         self.addtext_pushbutton.clicked.connect(self.launch_text_box)
+        self.text_color_pushbutton.clicked.connect(self.set_text_color)
+        self.font_combo_box.currentFontChanged.connect(self.set_font_style)
+        self.font_size_combox.currentIndexChanged.connect(self.set_font_style)
         self.add_palette_button()
 
     def add_palette_button(self):
@@ -62,11 +66,11 @@ class ReviewTool(Ui_Form, QWidget):
             self.pixmap = self.pixmap.scaled(1600, 850, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.image_board.set_image_label(self.pixmap)
         self.image_board.setFixedSize(self.pixmap.size())
-        print(self.geometry())
         self.setMaximumSize(self.pixmap.size())
 
     def open_color_panel(self):
         color_dialog = QColorDialog.getColor()
+
         self.image_board.set_pen_color(color_dialog)
         self.set_button_color(color_dialog.name())
 
@@ -82,7 +86,6 @@ class ReviewTool(Ui_Form, QWidget):
         file_path, _ = QFileDialog.getSaveFileName(
             self, "Save Image", "", "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*)"
         )
-        print(self.image_board.frameGeometry())
         pix = self.grab(self.image_board.geometry())
         pix.save(file_path, quality=-1)
 
@@ -90,33 +93,78 @@ class ReviewTool(Ui_Form, QWidget):
         if not self.text_label:
             self.text_label = QLabel(self)
             self.text_label.setGeometry(100, 100, 100, 100)
-            self.text_label.setText("move here ksjdbfksf")
+            self.text_label.setText("Add Text Here")
             self.text_label.show()
             self.text_label_status = True
+            self.font_dialog()
 
-            dialog = QDialog()
-            self.text_widget = QTextEdit(dialog)
-            self.text_widget.textChanged.connect(self.add_text_label)
-            dialog.exec_()
+    def font_dialog(self):
+        dialog = QDialog()
+        self.text_widget = QTextEdit()
+        font_button = QPushButton("Font")
+        font_button.clicked.connect(self.set_font_label)
+        text_layout = QVBoxLayout()
+        text_layout.addWidget(self.text_widget)
+        text_layout.addWidget(font_button)
+        dialog.setLayout(text_layout)
+        self.text_widget.textChanged.connect(self.add_text_label)
+        dialog.exec_()
 
     def add_text_label(self):
         label_text = self.text_widget.toPlainText()
         self.text_label.setText(label_text)
+        self.text_label.adjustSize()
+
+    def set_text_color(self):
+        color_dialog = QColorDialog.getColor()
+        style_sheet = "color : {}".format(color_dialog.name())
+        button_style_sheet = "background-color : {}".format(color_dialog.name())
+        try:
+            self.text_label.setStyleSheet(style_sheet)
+        except AttributeError as error:
+            print(error)
+        self.text_color_pushbutton.setStyleSheet(button_style_sheet)
+
+    def set_font_style(self):
+        font_family = self.font_combo_box.currentFont().family()
+        font_size = self.font_size_combox.currentText()
+        try:
+            self.text_label.setStyleSheet("font: {}pt {}".format(font_size, font_family))
+        except AttributeError as error:
+            print(error)
+        self.text_label.adjustSize()
+
+    def set_font_label(self):
+        ok, font = QFontDialog.getFont()
+        if ok:
+            self.text_label.setFont(font)
+            self.text_label.adjustSize()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton and self.text_label_status:
             self.label_active = True
+        else:
+            super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
         if self.label_active and self.text_label_status:
             self.text_label.move(event.pos())
+        else:
+            super().mouseMoveEvent(event)
         self.update()
+
+    def mouseDoubleClickEvent(self, event):
+        if event.button() == Qt.LeftButton and self.label_active:
+            self.font_dialog()
+        else:
+            super().mouseDoubleClickEvent(event)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Delete:
-            print(event.key())
             self.text_label.close()
             self.text_label = None
+        else:
+            super().keyPressEvent(event)
 
 
 def main():

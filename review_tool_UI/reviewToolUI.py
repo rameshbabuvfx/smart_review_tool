@@ -55,8 +55,8 @@ class Ui_Form(object):
 
         self.brush_size_slider = QSlider(self.horizontalFrame)
         self.brush_size_slider.setObjectName(u"brush_size_slider")
-        self.brush_size_slider.setMaximumSize(QSize(150, 16777215))
-        self.brush_size_slider.setMinimum(3)
+        self.brush_size_slider.setMaximumSize(QSize(100, 16777215))
+        self.brush_size_slider.setMinimum(10)
         self.brush_size_slider.setMaximum(20)
         self.brush_size_slider.setOrientation(Qt.Horizontal)
 
@@ -67,6 +67,22 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.addtext_pushbutton)
 
+        self.text_color_pushbutton = QPushButton(self.horizontalFrame)
+        self.text_color_pushbutton.setObjectName(u"text_color_pushbutton")
+
+        self.horizontalLayout.addWidget(self.text_color_pushbutton)
+
+        self.font_combo_box = QFontComboBox(self.horizontalFrame)
+        self.font_combo_box.setObjectName(u"font_combo_box")
+        self.font_combo_box.setMaximumSize(QSize(200, 16777215))
+
+        self.horizontalLayout.addWidget(self.font_combo_box)
+
+        self.font_size_combox = QComboBox(self.horizontalFrame)
+        self.font_size_combox.setObjectName(u"font_size_combox")
+
+        self.horizontalLayout.addWidget(self.font_size_combox)
+
 
         self.verticalLayout.addWidget(self.horizontalFrame)
 
@@ -74,7 +90,7 @@ class Ui_Form(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.verticalLayout_5 = QVBoxLayout()
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setContentsMargins(10, -1, 10, -1)
+        self.verticalLayout_5.setContentsMargins(3, -1, 10, -1)
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_5)
 
@@ -140,8 +156,9 @@ class Ui_Form(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.import_pushbutton.setText(QCoreApplication.translate("Form", u"Import", None))
         self.save_pushbutton.setText(QCoreApplication.translate("Form", u"save", None))
-        self.pen_icon_label.setText("")
+        self.pen_icon_label.setText(QCoreApplication.translate("Form", u"Size", None))
         self.addtext_pushbutton.setText(QCoreApplication.translate("Form", u"Add Text", None))
+        self.text_color_pushbutton.setText(QCoreApplication.translate("Form", u"Text Color", None))
         self.clear_pushbutton.setText(QCoreApplication.translate("Form", u"Clear", None))
         self.color_pushbutton.setText(QCoreApplication.translate("Form", u"Picker", None))
     # retranslateUi

@@ -10,14 +10,13 @@ class DrawingWidget(QWidget):
         self.label = QLabel()
         self.image = QPixmap(800, 600)
         self.image.fill(Qt.transparent)
-        self.setStyleSheet("background-color: red")
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
 
         self.last_point = None
         self.pen_color = "#000000"
-        self.pen_size = 2
+        self.pen_size = 3
 
     def set_image_label(self, image_path):
         self.image = image_path
@@ -38,7 +37,7 @@ class DrawingWidget(QWidget):
             super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
-        if self.drawing == True:
+        if self.drawing:
             end_point = self.label.mapFromParent(event.pos())
             painter = QPainter(self.image)
             painter.setRenderHint(QPainter.Antialiasing)
@@ -62,11 +61,6 @@ class DrawingWidget(QWidget):
             self.drawing = False
         else:
             super().mouseReleaseEvent(event)
-
-    def keyPressEvent(self, event):
-        print("this is")
-        if event.key() == Qt.Key_Z:
-            print("this is")
 
     def paintEvent(self, event):
         self.label.setPixmap(self.image)
