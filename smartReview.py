@@ -23,8 +23,9 @@ class ReviewTool(Ui_Form, QWidget):
         self.text_label = None
         self.label_active = None
         self.text_label_status = None
+        self.color_dialog = 000000
         self.image_board = DrawingWidget()
-        self.font_size_combox.addItems([str(size) for size in range(25)])
+        self.font_size_combox.addItems([str(size) for size in range(35)])
         self.font_size_combox.setCurrentIndex(10)
         self.verticalLayout_5.addWidget(self.image_board)
         self.color_pushbutton.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\color_palette.png"))
@@ -37,9 +38,9 @@ class ReviewTool(Ui_Form, QWidget):
         self.import_pushbutton.clicked.connect(lambda: self.import_image())
         self.clear_pushbutton.clicked.connect(lambda: self.add_image_label())
         self.addtext_pushbutton.clicked.connect(self.launch_text_box)
-        self.text_color_pushbutton.clicked.connect(self.set_text_color)
-        self.font_combo_box.currentFontChanged.connect(self.set_font_style)
-        self.font_size_combox.currentIndexChanged.connect(self.set_font_style)
+        self.text_color_pushbutton.clicked.connect(lambda: self.set_text_color("pressed"))
+        self.font_combo_box.currentFontChanged.connect(self.set_text_color)
+        self.font_size_combox.currentIndexChanged.connect(self.set_text_color)
         self.add_palette_button()
 
     def add_palette_button(self):
@@ -115,24 +116,21 @@ class ReviewTool(Ui_Form, QWidget):
         self.text_label.setText(label_text)
         self.text_label.adjustSize()
 
-    def set_text_color(self):
-        color_dialog = QColorDialog.getColor()
-        style_sheet = "color : {}".format(color_dialog.name())
-        button_style_sheet = "background-color : {}".format(color_dialog.name())
-        try:
-            self.text_label.setStyleSheet(style_sheet)
-        except AttributeError as error:
-            print(error)
-        self.text_color_pushbutton.setStyleSheet(button_style_sheet)
-
-    def set_font_style(self):
+    def set_text_color(self, color_button="Not pressed"):
+        if color_button == "pressed":
+            self.color_dialog = QColorDialog.getColor().name()
         font_family = self.font_combo_box.currentFont().family()
         font_size = self.font_size_combox.currentText()
+
+        style_sheet = """
+            color : {};
+            font: {}pt {};
+        """.format(self.color_dialog, font_size, font_family)
         try:
-            self.text_label.setStyleSheet("font: {}pt {}".format(font_size, font_family))
+            self.text_label.setStyleSheet(style_sheet)
+            self.text_label.adjustSize()
         except AttributeError as error:
             print(error)
-        self.text_label.adjustSize()
 
     def set_font_label(self):
         ok, font = QFontDialog.getFont()
