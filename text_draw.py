@@ -1,33 +1,75 @@
-import sys
-
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 
-from textWidget import TextLabelWidget
 
-
-class TextDraw(QWidget):
+class DrawingWidget(QWidget):
     def __init__(self):
-        super(TextDraw, self).__init__()
-        self.setGeometry(100, 250, 500, 500)
+        super(DrawingWidget, self).__init__()
 
-        self.label = TextLabelWidget(self)
+        self.label = QLabel()
+        self.image = QPixmap("review_image.jpg")
+        self.label.setPixmap(self.image)
 
+        self.paint_image = QPixmap(self.image.size())
+        self.paint_image.fill(Qt.transparent)
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.label)
+        self.setLayout(self.layout)
+        self.last_point = None
+        self.pen_color = "#000000"
+        self.pen_size = 3
+
+        self.paint_label = QLabel(self)
+        self.paint_label.resize(self.image.size())
+        # self.paint_label.setStyleSheet("background-color: red")
+        print(self.label.geometry())
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.label_move = True
+            self.last_point = self.label.mapFromParent(event.pos())
+            self.drawing = True
+        else:
+            super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
-        if self.label_move:
-            self.label.move(event.pos())
+        if self.drawing:
+            end_point = self.label.mapFromParent(event.pos())
+            painter = QPainter(self.paint_image)
+            painter.setRenderHint(QPainter.Antialiasing)
+            painter.setPen(
+                QPen(
+                    QColor(self.pen_color),
+                    self.pen_size,
+                    Qt.SolidLine,
+                    Qt.RoundCap,
+                    Qt.RoundJoin
+                )
+            )
+            line = QLine(self.last_point, end_point)
+            painter.drawLine(line)
+            self.last_point = end_point
+            self.update()
 
-        self.update()
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.last_point = None
+            self.drawing = False
+            painter = QPainter(self.paint_image)
+            painter.save()
+            painter.setCompositionMode(QPainter.CompositionMode_Clear)
+            painter.eraseRect(100, 100, 100, 100)
+            painter.restore()
+        else:
+            super().mouseReleaseEvent(event)
+
+    def paintEvent(self, event):
+        self.paint_label.setPixmap(self.paint_image)
 
 
 if __name__ == '__main__':
+    import sys
     app = QApplication(sys.argv)
-    tool = TextDraw()
+    tool = DrawingWidget()
     tool.show()
     sys.exit(app.exec_())

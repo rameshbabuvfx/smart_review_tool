@@ -66,7 +66,6 @@ class ReviewTool(Ui_Form, QWidget):
         if self.pixmap.width() >= 1600 and self.pixmap.height() >= 850:
             self.pixmap = self.pixmap.scaled(1600, 850, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.image_board.set_image_label(self.pixmap)
-        self.image_board.setFixedSize(self.pixmap.size())
         self.setMaximumSize(self.pixmap.size())
 
     def open_color_panel(self):
