@@ -72,11 +72,9 @@ class ReviewTool(Ui_Form, QWidget):
             self.pixmap = self.pixmap.scaled(1600, 850, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.image_board.set_image_label(self.pixmap)
         self.setMaximumSize(self.pixmap.size())
-        # self.setMinimumSize(self.pixmap.size())
 
     def open_color_panel(self):
         color_dialog = QColorDialog.getColor()
-
         self.image_board.set_pen_color(color_dialog)
         self.set_button_color(color_dialog.name())
 
@@ -98,7 +96,7 @@ class ReviewTool(Ui_Form, QWidget):
     def launch_text_box(self):
         if not self.text_label:
             self.text_label = QLabel(self)
-            self.text_label.setGeometry(100, 100, 100, 100)
+            self.text_label.setGeometry(100, 100, 100, 10)
             self.text_label.setText("Add Text Here")
             self.text_label.show()
             self.text_label_status = True
@@ -161,6 +159,7 @@ class ReviewTool(Ui_Form, QWidget):
             self.font_dialog()
         else:
             super().mouseDoubleClickEvent(event)
+
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Delete:
