@@ -83,6 +83,13 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.font_size_combox)
 
+        self.bold_pushButton = QPushButton(self.horizontalFrame)
+        self.bold_pushButton.setObjectName(u"bold_pushButton")
+        self.bold_pushButton.setMinimumSize(QSize(40, 0))
+        self.bold_pushButton.setStyleSheet(u"")
+
+        self.horizontalLayout.addWidget(self.bold_pushButton)
+
 
         self.verticalLayout.addWidget(self.horizontalFrame)
 
@@ -177,6 +184,7 @@ class Ui_Form(object):
         self.pen_icon_label.setText(QCoreApplication.translate("Form", u"Size", None))
         self.addtext_pushbutton.setText(QCoreApplication.translate("Form", u"Add Text", None))
         self.text_color_pushbutton.setText(QCoreApplication.translate("Form", u"Text Color", None))
+        self.bold_pushButton.setText("")
         self.pen_button.setText("")
         self.eraser_button.setText("")
         self.clear_pushbutton.setText(QCoreApplication.translate("Form", u"Clear", None))

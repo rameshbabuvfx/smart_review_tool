@@ -133,6 +133,22 @@
          <item>
           <widget class="QComboBox" name="font_size_combox"/>
          </item>
+         <item>
+          <widget class="QPushButton" name="bold_pushButton">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>

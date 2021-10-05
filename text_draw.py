@@ -90,3 +90,5 @@ if __name__ == '__main__':
     tool = DrawingWidget()
     tool.show()
     sys.exit(app.exec_())
+
+

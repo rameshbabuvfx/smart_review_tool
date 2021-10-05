@@ -1,3 +1,4 @@
+import os
 import sys
 
 from PySide2.QtWidgets import *
@@ -7,6 +8,7 @@ from PySide2.QtGui import *
 from review_tool_UI.reviewToolUI import Ui_Form
 from drawingWidget import DrawingWidget
 from paletteButton import QPaletteButton
+from paletteButton import QTextLabel
 
 COLORS = [
             '#000000', '#141923', '#414168', '#3a7fa7', '#35e3e3', '#8fd970', '#5ebb49',
@@ -24,14 +26,17 @@ class ReviewTool(Ui_Form, QWidget):
         self.label_active = None
         self.text_label_status = None
         self.color_dialog = 000000
+        self.setWindowTitle("Paint Tool")
         self.image_board = DrawingWidget()
         self.font_size_combox.addItems([str(size) for size in range(35)])
-        self.font_size_combox.setCurrentIndex(10)
+        self.font_size_combox.setCurrentIndex(8)
         self.verticalLayout_5.addWidget(self.image_board)
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.color_pushbutton.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\color_palette.png"))
-        self.pen_button.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\sketch.png"))
-        self.eraser_button.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\eraser.png"))
+        icon_path = os.path.dirname(__file__)
+        self.color_pushbutton.setIcon(QIcon(os.path.join(icon_path, "icons", "color_palette.png")))
+        self.pen_button.setIcon(QIcon(os.path.join(icon_path, "icons", "sketch.png")))
+        self.eraser_button.setIcon(QIcon(os.path.join(icon_path, "icons", "eraser.png")))
+        self.bold_pushButton.setIcon(QIcon(os.path.join(icon_path, "icons", "bold.png")))
         self.connect_ui()
 
     def connect_ui(self):
@@ -41,9 +46,10 @@ class ReviewTool(Ui_Form, QWidget):
         self.import_pushbutton.clicked.connect(lambda: self.import_image())
         self.clear_pushbutton.clicked.connect(lambda: self.add_image_label())
         self.addtext_pushbutton.clicked.connect(self.launch_text_box)
-        self.text_color_pushbutton.clicked.connect(lambda: self.set_text_color("pressed"))
-        self.font_combo_box.currentFontChanged.connect(self.set_text_color)
-        self.font_size_combox.currentIndexChanged.connect(self.set_text_color)
+        self.text_color_pushbutton.clicked.connect(lambda: self.set_text_style("pressed"))
+        self.font_combo_box.currentFontChanged.connect(self.set_text_style)
+        self.font_size_combox.currentIndexChanged.connect(self.set_text_style)
+        self.bold_pushButton.clicked.connect(lambda: self.set_text_style(bold_button="pressed"))
         self.pen_button.clicked.connect(lambda: self.image_board.change_mode(eraser=False))
         self.eraser_button.clicked.connect(lambda: self.image_board.change_mode(eraser=True))
         self.add_palette_button()
@@ -95,7 +101,7 @@ class ReviewTool(Ui_Form, QWidget):
 
     def launch_text_box(self):
         if not self.text_label:
-            self.text_label = QLabel(self)
+            self.text_label = QTextLabel(self)
             self.text_label.setGeometry(100, 100, 100, 10)
             self.text_label.setText("Add Text Here")
             self.text_label.show()
@@ -119,16 +125,18 @@ class ReviewTool(Ui_Form, QWidget):
         self.text_label.setText(label_text)
         self.text_label.adjustSize()
 
-    def set_text_color(self, color_button="Not pressed"):
+    def set_text_style(self, color_button="Not pressed", bold_button="Not pressed"):
         if color_button == "pressed":
             self.color_dialog = QColorDialog.getColor().name()
         font_family = self.font_combo_box.currentFont().family()
         font_size = self.font_size_combox.currentText()
-
+        bold = 0
+        if bold_button == "pressed":
+            bold = 75
         style_sheet = """
             color : {};
-            font: {}pt {};
-        """.format(self.color_dialog, font_size, font_family)
+            font: {} {}pt {};
+        """.format(self.color_dialog, bold, font_size, font_family)
         try:
             self.text_label.setStyleSheet(style_sheet)
             self.text_label.adjustSize()
@@ -159,7 +167,6 @@ class ReviewTool(Ui_Form, QWidget):
             self.font_dialog()
         else:
             super().mouseDoubleClickEvent(event)
-
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Delete:

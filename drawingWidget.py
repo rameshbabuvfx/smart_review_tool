@@ -6,12 +6,12 @@ from PySide2.QtGui import *
 class DrawingWidget(QWidget):
     def __init__(self):
         super(DrawingWidget, self).__init__()
-
         self.label = QLabel(self)
         self.image = QPixmap(800, 600)
         self.image.fill(Qt.transparent)
         self.label.setPixmap(self.image)
         self.label.resize(self.image.width(), self.image.height())
+        self.setCursor(QCursor(Qt.CrossCursor))
 
         self.paint_image = QPixmap(self.image.size())
         self.paint_image.fill(Qt.transparent)
@@ -95,9 +95,9 @@ class DrawingWidget(QWidget):
             painter.drawRect(pixmap.rect())
             painter.end()
             cursor = QCursor(pixmap)
-            QApplication.setOverrideCursor(cursor)
+            self.setCursor(cursor)
         else:
-            QApplication.restoreOverrideCursor()
+            self.setCursor(QCursor(Qt.CrossCursor))
 
 
 if __name__ == '__main__':
