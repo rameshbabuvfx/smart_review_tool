@@ -28,7 +28,10 @@ class ReviewTool(Ui_Form, QWidget):
         self.font_size_combox.addItems([str(size) for size in range(35)])
         self.font_size_combox.setCurrentIndex(10)
         self.verticalLayout_5.addWidget(self.image_board)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.color_pushbutton.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\color_palette.png"))
+        self.pen_button.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\sketch.png"))
+        self.eraser_button.setIcon(QIcon(r"D:\PythonProjects\NukePython\smart_review_tool\icons\eraser.png"))
         self.connect_ui()
 
     def connect_ui(self):
@@ -69,6 +72,7 @@ class ReviewTool(Ui_Form, QWidget):
             self.pixmap = self.pixmap.scaled(1600, 850, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.image_board.set_image_label(self.pixmap)
         self.setMaximumSize(self.pixmap.size())
+        # self.setMinimumSize(self.pixmap.size())
 
     def open_color_panel(self):
         color_dialog = QColorDialog.getColor()
@@ -167,8 +171,8 @@ class ReviewTool(Ui_Form, QWidget):
 
 
 def main():
-    tool = ReviewTool()
-    tool.show()
+    review = ReviewTool()
+    review.show()
 
 
 if __name__ == '__main__':

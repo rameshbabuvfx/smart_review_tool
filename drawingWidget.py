@@ -7,7 +7,7 @@ class DrawingWidget(QWidget):
     def __init__(self):
         super(DrawingWidget, self).__init__()
 
-        self.label = QLabel()
+        self.label = QLabel(self)
         self.image = QPixmap(800, 600)
         self.image.fill(Qt.transparent)
         self.label.setPixmap(self.image)
@@ -15,22 +15,30 @@ class DrawingWidget(QWidget):
 
         self.paint_image = QPixmap(self.image.size())
         self.paint_image.fill(Qt.transparent)
-        self.layout = QVBoxLayout()
-        self.layout.setContentsMargins(0, 0, 0, 0)
-        self.layout.addWidget(self.label)
-        self.setLayout(self.layout)
+        # self.layout = QVBoxLayout()
+        # self.layout.setContentsMargins(0, 0, 0, 0)
+        # self.layout.addWidget(self.label)
+        # self.setLayout(self.layout)
         self.last_point = None
         self.pen_color = "#000000"
         self.pen_size = 3
         self.eraser = False
-        self.eraser_size = 20
+        self.eraser_size = 30
 
         self.paint_label = QLabel(self)
         self.paint_label.setGeometry(self.label.geometry())
 
     def set_image_label(self, image_path):
         self.image = image_path
+        self.paint_image = QPixmap(self.image.size())
+        self.paint_image.fill(Qt.transparent)
         self.label.setPixmap(self.image)
+        self.label.resize(self.image.width(), self.image.height())
+        self.paint_label.setPixmap(self.paint_image)
+        print(self.layout)
+        self.paint_label.setGeometry(self.label.rect())
+        self.setMinimumSize(self.image.size())
+        print(self.paint_label.geometry())
         self.update()
 
     def set_pen_color(self, color):

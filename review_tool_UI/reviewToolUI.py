@@ -108,11 +108,13 @@ class Ui_Form(object):
         self.horizontalLayout_3.setContentsMargins(-1, -1, -1, 0)
         self.pen_button = QPushButton(self.verticalFrame_2)
         self.pen_button.setObjectName(u"pen_button")
+        self.pen_button.setMinimumSize(QSize(40, 40))
 
         self.horizontalLayout_3.addWidget(self.pen_button)
 
         self.eraser_button = QPushButton(self.verticalFrame_2)
         self.eraser_button.setObjectName(u"eraser_button")
+        self.eraser_button.setMinimumSize(QSize(40, 40))
 
         self.horizontalLayout_3.addWidget(self.eraser_button)
 
@@ -175,8 +177,8 @@ class Ui_Form(object):
         self.pen_icon_label.setText(QCoreApplication.translate("Form", u"Size", None))
         self.addtext_pushbutton.setText(QCoreApplication.translate("Form", u"Add Text", None))
         self.text_color_pushbutton.setText(QCoreApplication.translate("Form", u"Text Color", None))
-        self.pen_button.setText(QCoreApplication.translate("Form", u"PushButton", None))
-        self.eraser_button.setText(QCoreApplication.translate("Form", u"PushButton", None))
+        self.pen_button.setText("")
+        self.eraser_button.setText("")
         self.clear_pushbutton.setText(QCoreApplication.translate("Form", u"Clear", None))
         self.color_pushbutton.setText(QCoreApplication.translate("Form", u"Picker", None))
     # retranslateUi
