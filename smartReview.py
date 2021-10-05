@@ -41,6 +41,8 @@ class ReviewTool(Ui_Form, QWidget):
         self.text_color_pushbutton.clicked.connect(lambda: self.set_text_color("pressed"))
         self.font_combo_box.currentFontChanged.connect(self.set_text_color)
         self.font_size_combox.currentIndexChanged.connect(self.set_text_color)
+        self.pen_button.clicked.connect(lambda: self.image_board.change_mode(eraser=False))
+        self.eraser_button.clicked.connect(lambda: self.image_board.change_mode(eraser=True))
         self.add_palette_button()
 
     def add_palette_button(self):

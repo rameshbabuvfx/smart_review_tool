@@ -16,12 +16,13 @@ class DrawingWidget(QWidget):
         self.paint_image = QPixmap(self.image.size())
         self.paint_image.fill(Qt.transparent)
         self.layout = QVBoxLayout()
-        self.layout.setContentsMargins(0,0,0,0)
+        self.layout.setContentsMargins(0, 0, 0, 0)
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
         self.last_point = None
         self.pen_color = "#000000"
         self.pen_size = 3
+        self.change = False
 
         self.paint_label = QLabel(self)
         self.paint_label.setGeometry(self.label.geometry())
@@ -67,6 +68,20 @@ class DrawingWidget(QWidget):
 
     def paintEvent(self, event):
         self.paint_label.setPixmap(self.paint_image)
+
+    def change_color(self):
+        self.change = not self.change
+        if self.change:
+            pixmap = QPixmap(QSize(1, 1)*self._clear_size)
+            pixmap.fill(Qt.transparent)
+            painter = QPainter(pixmap)
+            painter.setPen(QPen(Qt.black, 2))
+            painter.drawRect(pixmap.rect())
+            painter.end()
+            cursor = QCursor(pixmap)
+            QApplication.setOverrideCursor(cursor)
+        else:
+            QApplication.restoreOverrideCursor()
 
 
 if __name__ == '__main__':

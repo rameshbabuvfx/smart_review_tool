@@ -10,14 +10,23 @@ class DrawingWidget(QWidget):
         self.label = QLabel()
         self.image = QPixmap(800, 600)
         self.image.fill(Qt.transparent)
+        self.label.setPixmap(self.image)
+        self.label.resize(self.image.width(), self.image.height())
+
+        self.paint_image = QPixmap(self.image.size())
+        self.paint_image.fill(Qt.transparent)
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
-
         self.last_point = None
         self.pen_color = "#000000"
         self.pen_size = 3
+        self.eraser = False
+        self.eraser_size = 20
+
+        self.paint_label = QLabel(self)
+        self.paint_label.setGeometry(self.label.geometry())
 
     def set_image_label(self, image_path):
         self.image = image_path
@@ -40,7 +49,7 @@ class DrawingWidget(QWidget):
     def mouseMoveEvent(self, event):
         if self.drawing:
             end_point = self.label.mapFromParent(event.pos())
-            painter = QPainter(self.image)
+            painter = QPainter(self.paint_image)
             painter.setRenderHint(QPainter.Antialiasing)
             painter.setPen(
                 QPen(
@@ -51,8 +60,16 @@ class DrawingWidget(QWidget):
                     Qt.RoundJoin
                 )
             )
-            line = QLine(self.last_point, end_point)
-            painter.drawLine(line)
+            if self.eraser:
+                rect = QRect(QPoint(), self.eraser_size * QSize())
+                rect.moveCenter(event.pos())
+                painter.save()
+                painter.setCompositionMode(QPainter.CompositionMode_Clear)
+                painter.eraseRect(rect)
+                painter.restore()
+            else:
+                line = QLine(self.last_point, end_point)
+                painter.drawLine(line)
             self.last_point = end_point
             self.update()
 
@@ -64,12 +81,26 @@ class DrawingWidget(QWidget):
             super().mouseReleaseEvent(event)
 
     def paintEvent(self, event):
-        self.label.setPixmap(self.image)
+        self.paint_label.setPixmap(self.paint_image)
+
+    def change_mode(self, eraser):
+        self.eraser = eraser
+        if self.eraser:
+            pixmap = QPixmap(QSize(1, 1) * self.eraser_size)
+            pixmap.fill(Qt.transparent)
+            painter = QPainter(pixmap)
+            painter.setPen(QPen(Qt.black, 2))
+            painter.drawRect(pixmap.rect())
+            painter.end()
+            cursor = QCursor(pixmap)
+            QApplication.setOverrideCursor(cursor)
+        else:
+            QApplication.restoreOverrideCursor()
 
 
-# if __name__ == '__main__':
-#     import sys
-#     app = QApplication(sys.argv)
-#     tool = DrawingWidget()
-#     tool.show()
-#     sys.exit(app.exec_())
+if __name__ == '__main__':
+    import sys
+    app = QApplication(sys.argv)
+    tool = DrawingWidget()
+    tool.show()
+    sys.exit(app.exec_())
