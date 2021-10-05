@@ -92,6 +92,7 @@ class DrawingWidget(QWidget):
             pixmap.fill(Qt.transparent)
             painter = QPainter(pixmap)
             painter.setPen(QPen(Qt.black, 2))
+            painter.setBrush(QBrush(Qt.DiagCrossPattern))
             painter.drawRect(pixmap.rect())
             painter.end()
             cursor = QCursor(pixmap)
