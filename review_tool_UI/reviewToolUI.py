@@ -168,6 +168,12 @@ class Ui_Form(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
+        self.label = QLabel(self.frame)
+        self.label.setObjectName(u"label")
+        self.label.setMaximumSize(QSize(16777215, 17))
+
+        self.verticalLayout.addWidget(self.label)
+
 
         self.verticalLayout_2.addWidget(self.frame)
 
@@ -189,5 +195,6 @@ class Ui_Form(object):
         self.eraser_button.setText("")
         self.clear_pushbutton.setText(QCoreApplication.translate("Form", u"Clear", None))
         self.color_pushbutton.setText(QCoreApplication.translate("Form", u"Picker", None))
+        self.label.setText(QCoreApplication.translate("Form", u"<html><head/><body><p align=\"justify\"><span style=\" font-size:7pt; font-style:italic;\">Delete Text - Del,  Edit Text - Double click</span></p><p align=\"justify\"><span style=\" font-size:7pt;\"><br/></span></p></body></html>", None))
     # retranslateUi
 
