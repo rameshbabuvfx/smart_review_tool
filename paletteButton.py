@@ -9,12 +9,3 @@ class QPaletteButton(QPushButton):
         self.setFixedSize(QSize(35, 35))
         self.color = color
         self.setStyleSheet("background-color: {};".format(color))
-
-
-class QTextLabel(QLabel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        pass
-
-    def enterEvent(self, event):
-        self.setCursor(QCursor(Qt.OpenHandCursor))

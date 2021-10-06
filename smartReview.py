@@ -8,7 +8,6 @@ from PySide2.QtGui import *
 from review_tool_UI.reviewToolUI import Ui_Form
 from drawingWidget import DrawingWidget
 from paletteButton import QPaletteButton
-from paletteButton import QTextLabel
 
 COLORS = [
             '#000000', '#141923', '#414168', '#3a7fa7', '#35e3e3', '#8fd970', '#5ebb49',
@@ -22,8 +21,8 @@ class ReviewTool(Ui_Form, QWidget):
         super(ReviewTool, self).__init__()
         self.setupUi(self)
         self.pixmap = None
-        self.text_label = None
         self.label_active = None
+        self.text_label = None
         self.text_label_status = None
         self.color_dialog = 000000
         self.setWindowTitle("Paint Tool")
@@ -101,7 +100,7 @@ class ReviewTool(Ui_Form, QWidget):
 
     def launch_text_box(self):
         if not self.text_label:
-            self.text_label = QTextLabel(self)
+            self.text_label = QLabel(self)
             self.text_label.setGeometry(100, 100, 100, 10)
             self.text_label.setText("Add Text Here")
             self.text_label.show()
@@ -149,9 +148,16 @@ class ReviewTool(Ui_Form, QWidget):
             self.text_label.setFont(font)
             self.text_label.adjustSize()
 
+    def enterEvent(self, event):
+        try:
+            self.text_label.setCursor(QCursor(Qt.OpenHandCursor))
+        except:
+            pass
+
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton and self.text_label_status:
             self.label_active = True
+            self.text_label.setCursor(QCursor(Qt.ClosedHandCursor))
         else:
             super().mousePressEvent(event)
 
@@ -161,6 +167,10 @@ class ReviewTool(Ui_Form, QWidget):
         else:
             super().mouseMoveEvent(event)
         self.update()
+
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.LeftButton and self.text_label_status:
+            self.text_label.setCursor(QCursor(Qt.OpenHandCursor))
 
     def mouseDoubleClickEvent(self, event):
         if event.button() == Qt.LeftButton and self.label_active:
