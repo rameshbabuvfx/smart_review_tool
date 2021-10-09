@@ -189,10 +189,3 @@ class ReviewTool(Ui_Form, QWidget):
 def main():
     review = ReviewTool()
     review.show()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    tool = ReviewTool()
-    tool.show()
-    sys.exit(app.exec_())
