@@ -18,7 +18,6 @@ class ReviewWindow(reviewMainUI.Ui_Form, QWidget):
         ScreenShot()
 
 
-
 class ScreenShot(QWidget):
     def __init__(self):
         super(ScreenShot, self).__init__()
@@ -61,7 +60,6 @@ class ScreenShot(QWidget):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.endPoint = event.pos()
-
             main_window_id = QApplication.desktop().winId()
             long_win_id = main_window_id
             screenshot = QPixmap.grabWindow(long_win_id)
