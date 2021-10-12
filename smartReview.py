@@ -17,12 +17,13 @@ COLORS = [
 
 
 class ReviewTool(Ui_Form, QWidget):
-    def __init__(self):
+    def __init__(self, image_path=None):
         super(ReviewTool, self).__init__()
         self.setupUi(self)
         self.pixmap = None
         self.label_active = None
         self.text_label = None
+        self.image_path = image_path
         self.text_label_status = None
         self.color_dialog = 000000
         self.setWindowTitle("Paint Tool")
@@ -37,13 +38,16 @@ class ReviewTool(Ui_Form, QWidget):
         self.eraser_button.setIcon(QIcon(os.path.join(icon_path, "icons", "eraser.png")))
         self.bold_pushButton.setIcon(QIcon(os.path.join(icon_path, "icons", "bold.png")))
         self.connect_ui()
+        if image_path:
+            self.add_image_label(self.image_path)
+        self.show()
 
     def connect_ui(self):
         self.brush_size_slider.valueChanged.connect(self.set_pen_size)
         self.color_pushbutton.clicked.connect(self.open_color_panel)
         self.save_pushbutton.clicked.connect(lambda: self.save_image())
         self.import_pushbutton.clicked.connect(lambda: self.import_image())
-        self.clear_pushbutton.clicked.connect(lambda: self.add_image_label())
+        self.clear_pushbutton.clicked.connect(lambda: self.add_image_label(self.image_path))
         self.addtext_pushbutton.clicked.connect(self.launch_text_box)
         self.text_color_pushbutton.clicked.connect(lambda: self.set_text_style("pressed"))
         self.font_combo_box.currentFontChanged.connect(self.set_text_style)
@@ -69,10 +73,10 @@ class ReviewTool(Ui_Form, QWidget):
     def import_image(self):
         self.image_path, _ = QFileDialog.getOpenFileName(self, "import image")
         if self.image_path:
-            self.add_image_label()
+            self.add_image_label(self.image_path)
 
-    def add_image_label(self):
-        self.pixmap = QPixmap(self.image_path)
+    def add_image_label(self, image_path=None):
+        self.pixmap = QPixmap(image_path)
         if self.pixmap.width() >= 1600 and self.pixmap.height() >= 850:
             self.pixmap = self.pixmap.scaled(1600, 850, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.image_board.set_image_label(self.pixmap)

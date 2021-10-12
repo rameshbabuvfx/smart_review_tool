@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\PythonProjects\NukePython\smart_review_tool\review_tool_UI\reviewMainUI.ui',
-# licensing of 'D:\PythonProjects\NukePython\smart_review_tool\review_tool_UI\reviewMainUI.ui' applies.
+# Form implementation generated from reading ui file 'reviewMainUI.ui',
+# licensing of 'reviewMainUI.ui' applies.
 #
-# Created: Fri Oct  8 18:17:48 2021
+# Created: Tue Oct 12 23:29:51 2021
 #      by: pyside2-uic  running on PySide2 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,10 +23,10 @@ class Ui_Form(object):
         self.screen_grab_pushButton.setBaseSize(QtCore.QSize(0, 0))
         self.screen_grab_pushButton.setObjectName("screen_grab_pushButton")
         self.gridLayout.addWidget(self.screen_grab_pushButton, 0, 0, 1, 1)
-        self.current_frame_pushButton = QtWidgets.QPushButton(Form)
-        self.current_frame_pushButton.setMinimumSize(QtCore.QSize(0, 150))
-        self.current_frame_pushButton.setObjectName("current_frame_pushButton")
-        self.gridLayout.addWidget(self.current_frame_pushButton, 0, 1, 1, 1)
+        self.launch_tool_pushButton = QtWidgets.QPushButton(Form)
+        self.launch_tool_pushButton.setMinimumSize(QtCore.QSize(0, 150))
+        self.launch_tool_pushButton.setObjectName("launch_tool_pushButton")
+        self.gridLayout.addWidget(self.launch_tool_pushButton, 0, 1, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
 
         self.retranslateUi(Form)
@@ -35,5 +35,5 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Form", None, -1))
         self.screen_grab_pushButton.setText(QtWidgets.QApplication.translate("Form", "Screen Grab", None, -1))
-        self.current_frame_pushButton.setText(QtWidgets.QApplication.translate("Form", "Current Frame", None, -1))
+        self.launch_tool_pushButton.setText(QtWidgets.QApplication.translate("Form", "Launch Paint", None, -1))
 

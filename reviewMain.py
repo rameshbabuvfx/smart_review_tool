@@ -1,3 +1,4 @@
+import os
 import sys
 
 from PySide2.QtWidgets import *
@@ -13,9 +14,14 @@ class ReviewWindow(reviewMainUI.Ui_Form, QWidget):
         super(ReviewWindow, self).__init__()
         self.setupUi(self)
         self.screen_grab_pushButton.clicked.connect(self.review_paint_tool)
+        self.launch_tool_pushButton.clicked.connect(self.launch_review_tool)
 
-    def review_paint_tool(self):
+    @staticmethod
+    def review_paint_tool():
         ScreenShot()
+
+    def launch_review_tool(self):
+        smartReview.ReviewTool()
 
 
 class ScreenShot(QWidget):
@@ -25,26 +31,24 @@ class ScreenShot(QWidget):
         self.setStyleSheet('''background-color:white; ''')
         self.setWindowOpacity(0.7)
         self.showMaximized()
-        self.setCursor(Qt.CrossCursor)
-        self.bmask = QBitmap(self.geometry().size())
-        self.bmask.fill(Qt.black)
-        self.mask = self.bmask.copy()
         self.isDrawing = False
+        self.setCursor(Qt.CrossCursor)
         self.startPoint = QPoint()
         self.endPoint = QPoint()
         self.show()
 
     def paintEvent(self, event):
-        if self.isDrawing:
-            self.mask = self.bmask.copy()
-            mask_painter = QPainter(self.mask)
-            pen = QPen()
-            pen.setStyle(Qt.NoPen)
-            mask_painter.setPen(pen)
-            brush = QBrush(Qt.white)
-            mask_painter.setBrush(brush)
-            mask_painter.drawRect(QRect(self.startPoint, self.endPoint))
-            self.setMask(QBitmap(self.mask))
+        self.bmask = QBitmap(self.geometry().size())
+        self.bmask.fill(Qt.black)
+        self.mask = self.bmask.copy()
+        mask_painter = QPainter(self.mask)
+        pen = QPen()
+        pen.setStyle(Qt.NoPen)
+        mask_painter.setPen(pen)
+        brush = QBrush(Qt.white)
+        mask_painter.setBrush(brush)
+        mask_painter.drawRect(QRect(self.startPoint, self.endPoint))
+        self.setMask(QBitmap(self.mask))
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -65,12 +69,13 @@ class ScreenShot(QWidget):
             screenshot = QPixmap.grabWindow(long_win_id)
             rect = QRect(self.startPoint, self.endPoint)
             output_region = screenshot.copy(rect)
-            temp_path = r"D:\PythonProjects\NukePython\smart_review_tool\temp.jpg"
+            temp_path = os.path.dirname(__file__)
+            temp_path = "{}/_cache/temp.png".format(temp_path)
             output_region.save(temp_path, format='JPG', quality=100)
             saved_image = (QPixmap(temp_path).scaled(1580, 1020, Qt.KeepAspectRatio))
             self.resize(saved_image.width(), saved_image.height())
             self.close()
-            smartReview.main()
+            smartReview.ReviewTool(temp_path)
 
 
 if __name__ == '__main__':
