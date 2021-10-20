@@ -19,7 +19,7 @@ class DrawingWidget(QWidget):
         self.pen_color = "#000000"
         self.pen_size = 3
         self.eraser = False
-        self.eraser_size = 30
+        self.eraser_size = 50
 
         self.paint_label = QLabel(self)
         self.paint_label.setGeometry(self.label.geometry())
