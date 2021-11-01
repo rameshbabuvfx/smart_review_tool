@@ -5,6 +5,10 @@ from PySide2.QtGui import *
 
 class DrawingWidget(QWidget):
     def __init__(self):
+        """
+        Init method.
+
+        """
         super(DrawingWidget, self).__init__()
         self.label = QLabel(self)
         self.image = QPixmap(800, 600)
@@ -25,6 +29,12 @@ class DrawingWidget(QWidget):
         self.paint_label.setGeometry(self.label.geometry())
 
     def set_image_label(self, image_path):
+        """
+        Sets image in image label.
+
+        :param Str image_path: Path of the image.
+        :return: None.
+        """
         self.image = image_path
         self.paint_image = QPixmap(self.image.size())
         self.paint_image.fill(Qt.transparent)
@@ -36,12 +46,30 @@ class DrawingWidget(QWidget):
         self.update()
 
     def set_pen_color(self, color):
+        """
+        Sets the pen color.
+
+        :param Str color: Color value in rgb.
+        :return: None.
+        """
         self.pen_color = color
 
     def set_pen_size(self, size):
+        """
+        Sets pen size.
+
+        :param Int size: Size of pen.
+        :return: None.
+        """
         self.pen_size = size
 
     def mousePressEvent(self, event):
+        """
+        Enables drawing mode.
+
+        :param event: Event.
+        :return: None.
+        """
         if event.button() == Qt.LeftButton:
             self.last_point = self.label.mapFromParent(event.pos())
             self.drawing = True
@@ -49,6 +77,12 @@ class DrawingWidget(QWidget):
             super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
+        """
+        Draws and Erases the paint strokes on image.
+
+        :param event: Event.
+        :return: None.
+        """
         if self.drawing:
             end_point = self.label.mapFromParent(event.pos())
             painter = QPainter(self.paint_image)
@@ -76,6 +110,12 @@ class DrawingWidget(QWidget):
             self.update()
 
     def mouseReleaseEvent(self, event):
+        """
+        Disables the drawing mode.
+
+        :param event: Event.
+        :return: None.
+        """
         if event.button() == Qt.LeftButton:
             self.last_point = None
             self.drawing = False
@@ -83,9 +123,21 @@ class DrawingWidget(QWidget):
             super().mouseReleaseEvent(event)
 
     def paintEvent(self, event):
+        """
+        update the pixmap label.
+
+        :param event: Event.
+        :return: None.
+        """
         self.paint_label.setPixmap(self.paint_image)
 
     def change_mode(self, eraser):
+        """
+        Changes the cursor as per mode.
+
+        :param Bool eraser: status of eraser
+        :return: None.
+        """
         self.eraser = eraser
         if self.eraser:
             pixmap = QPixmap(QSize(1, 1) * self.eraser_size)

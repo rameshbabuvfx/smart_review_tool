@@ -18,9 +18,19 @@ class ReviewWindow(reviewMainUI.Ui_Form, QWidget):
 
     @staticmethod
     def review_paint_tool():
+        """
+        Runs Screenshot class.
+
+        :return: None
+        """
         ScreenShot()
 
     def launch_review_tool(self):
+        """
+        Runs Review tool class.
+
+        :return:
+        """
         smartReview.ReviewTool()
 
 
@@ -38,6 +48,12 @@ class ScreenShot(QWidget):
         self.show()
 
     def paintEvent(self, event):
+        """
+        Paint Event draws the widget.
+
+        :param event: Event.
+        :return: None.
+        """
         self.bmask = QBitmap(self.geometry().size())
         self.bmask.fill(Qt.black)
         self.mask = self.bmask.copy()
@@ -51,6 +67,12 @@ class ScreenShot(QWidget):
         self.setMask(QBitmap(self.mask))
 
     def mousePressEvent(self, event):
+        """
+        Enables the drawing mode.
+
+        :param event: Event.
+        :return: None.
+        """
         if event.button() == Qt.LeftButton:
 
             self.startPoint = event.pos()
@@ -58,11 +80,23 @@ class ScreenShot(QWidget):
             self.isDrawing = True
 
     def mouseMoveEvent(self, event):
+        """
+        Draws the rect on the widget.
+
+        :param event: Event
+        :return: None.
+        """
         if self.isDrawing:
             self.endPoint = event.pos()
             self.update()
 
     def mouseReleaseEvent(self, event):
+        """
+        Saves the screenshots to given path.
+
+        :param event: Event.
+        :return: None.
+        """
         if event.button() == Qt.LeftButton:
             self.endPoint = event.pos()
             main_window_id = QApplication.desktop().winId()
