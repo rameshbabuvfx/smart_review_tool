@@ -52,6 +52,7 @@ class ScreenShot(QWidget):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
+
             self.startPoint = event.pos()
             self.endPoint = self.startPoint
             self.isDrawing = True

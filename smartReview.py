@@ -18,6 +18,11 @@ COLORS = [
 
 class ReviewTool(Ui_Form, QWidget):
     def __init__(self, image_path=None):
+        """
+        InIt method for Review tool class.
+
+        :param Str image_path: Image path.
+        """
         super(ReviewTool, self).__init__()
         self.setupUi(self)
         self.pixmap = None
@@ -43,6 +48,11 @@ class ReviewTool(Ui_Form, QWidget):
         self.show()
 
     def connect_ui(self):
+        """
+        Connects Ui with custom methods.
+
+        :return: None.
+        """
         self.brush_size_slider.valueChanged.connect(self.set_pen_size)
         self.color_pushbutton.clicked.connect(self.open_color_panel)
         self.save_pushbutton.clicked.connect(lambda: self.save_image())
@@ -58,6 +68,11 @@ class ReviewTool(Ui_Form, QWidget):
         self.add_palette_button()
 
     def add_palette_button(self):
+        """
+        Adds Palette buttons in window.
+
+        :return: None.
+        """
         for count, color in enumerate(COLORS):
             palette_button = QPaletteButton(color)
             self.connect_color_buttons(palette_button, color)
@@ -67,15 +82,33 @@ class ReviewTool(Ui_Form, QWidget):
                 self.palette_layout.addWidget(palette_button)
 
     def connect_color_buttons(self, palette_button, color):
+        """
+        Connects color button with custom menthods.
+
+        :param palette_button: color button.
+        :param color: color.
+        :return: None.
+        """
         palette_button.pressed.connect(lambda: self.image_board.set_pen_color(color))
         palette_button.pressed.connect(lambda: self.set_button_color(color))
 
     def import_image(self):
+        """
+        Imports images from file manager.
+
+        :return: None.
+        """
         self.image_path, _ = QFileDialog.getOpenFileName(self, "import image")
         if self.image_path:
             self.add_image_label(self.image_path)
 
     def add_image_label(self, image_path=None):
+        """
+        Adds image label in main widget.
+
+        :param Str image_path: Path of image.
+        :return: None.
+        """
         self.pixmap = QPixmap(image_path)
         if self.pixmap.width() >= 1600 and self.pixmap.height() >= 850:
             self.pixmap = self.pixmap.scaled(1600, 850, Qt.KeepAspectRatio, Qt.SmoothTransformation)
@@ -83,19 +116,40 @@ class ReviewTool(Ui_Form, QWidget):
         self.setMaximumSize(self.pixmap.size())
 
     def open_color_panel(self):
+        """
+        Opens color panel
+
+        :return: None.
+        """
         color_dialog = QColorDialog.getColor()
         self.image_board.set_pen_color(color_dialog)
         self.set_button_color(color_dialog.name())
 
     def set_button_color(self, hex):
+        """
+        Sets color for picker button.
+
+        :param Str hex: Hexa color value.
+        :return: None.
+        """
         style_sheet = "background-color : {}".format(hex)
         self.color_pushbutton.setStyleSheet(style_sheet)
 
     def set_pen_size(self):
+        """
+        Sets pen size.
+
+        :return: None.
+        """
         pen_size = self.brush_size_slider.value()
         self.image_board.set_pen_size(pen_size)
 
     def save_image(self):
+        """
+        Saves imported image.
+
+        :return: None.
+        """
         file_path, _ = QFileDialog.getSaveFileName(
             self, "Save Image", "", "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*)"
         )
@@ -103,6 +157,11 @@ class ReviewTool(Ui_Form, QWidget):
         pix.save(file_path, quality=-1)
 
     def launch_text_box(self):
+        """
+        Opens text box.
+
+        :return: None.
+        """
         if not self.text_label:
             self.text_label = QLabel(self)
             self.text_label.setGeometry(100, 100, 100, 10)
@@ -112,6 +171,11 @@ class ReviewTool(Ui_Form, QWidget):
             self.font_dialog()
 
     def font_dialog(self):
+        """
+        Opens font dialog box.
+
+        :return: None.
+        """
         dialog = QDialog()
         self.text_widget = QTextEdit()
         font_button = QPushButton("Font")
@@ -124,11 +188,23 @@ class ReviewTool(Ui_Form, QWidget):
         dialog.exec_()
 
     def add_text_label(self):
+        """
+        Adds text label on image label.
+
+        :return: None.
+        """
         label_text = self.text_widget.toPlainText()
         self.text_label.setText(label_text)
         self.text_label.adjustSize()
 
     def set_text_style(self, color_button="Not pressed", bold_button="Not pressed"):
+        """
+        Sets the stylesheet for color button.
+
+        :param Str color_button: Status of button.
+        :param Str bold_button: Status of Bold button.
+        :return: None.
+        """
         if color_button == "pressed":
             self.color_dialog = QColorDialog.getColor().name()
         font_family = self.font_combo_box.currentFont().family()
@@ -147,18 +223,35 @@ class ReviewTool(Ui_Form, QWidget):
             print(error)
 
     def set_font_label(self):
+        """
+        Sets font style.
+
+        :return: None.
+        """
         ok, font = QFontDialog.getFont()
         if ok:
             self.text_label.setFont(font)
             self.text_label.adjustSize()
 
     def enterEvent(self, event):
+        """
+        Changes cursor when mouse enters in text label.
+
+        :param event: Evnet
+        :return: None.
+        """
         try:
             self.text_label.setCursor(QCursor(Qt.OpenHandCursor))
         except:
             pass
 
     def mousePressEvent(self, event):
+        """
+        Sets cursor when mouse clicks on text label.
+
+        :param event: Event.
+        :return: None.
+        """
         if event.button() == Qt.LeftButton and self.text_label_status:
             self.label_active = True
             self.text_label.setCursor(QCursor(Qt.ClosedHandCursor))
@@ -166,6 +259,12 @@ class ReviewTool(Ui_Form, QWidget):
             super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
+        """
+        Moves text label as per mouse movement.
+
+        :param event: Event.
+        :return: None.
+        """
         if self.label_active and self.text_label_status:
             self.text_label.move(event.pos())
         else:
@@ -173,16 +272,34 @@ class ReviewTool(Ui_Form, QWidget):
         self.update()
 
     def mouseReleaseEvent(self, event):
+        """
+        Reverts the cursor type when mouse release.
+
+        :param event: Event.
+        :return: None.
+        """
         if event.button() == Qt.LeftButton and self.text_label_status:
             self.text_label.setCursor(QCursor(Qt.OpenHandCursor))
 
     def mouseDoubleClickEvent(self, event):
+        """
+        Opens the dialog box when double clicks on text label.
+
+        :param event: Event.
+        :return: None.
+        """
         if event.button() == Qt.LeftButton and self.label_active:
             self.font_dialog()
         else:
             super().mouseDoubleClickEvent(event)
 
     def keyPressEvent(self, event):
+        """
+        Deletes the text label "Z" when key pressed
+
+        :param event: Event.
+        :return: None.
+        """
         if event.key() == Qt.Key_Delete:
             self.text_label.close()
             self.text_label = None
