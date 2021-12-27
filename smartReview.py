@@ -1,5 +1,4 @@
 import os
-import sys
 
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
@@ -237,7 +236,7 @@ class ReviewTool(Ui_Form, QWidget):
         """
         Changes cursor when mouse enters in text label.
 
-        :param event: Evnet
+        :param event: Event.
         :return: None.
         """
         try:
@@ -295,7 +294,7 @@ class ReviewTool(Ui_Form, QWidget):
 
     def keyPressEvent(self, event):
         """
-        Deletes the text label "Z" when key pressed
+        Deletes the text label "Z" when key pressed.
 
         :param event: Event.
         :return: None.
