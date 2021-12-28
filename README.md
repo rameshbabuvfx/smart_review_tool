@@ -2,7 +2,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/rameshbabuvfx/smart_review_tool)](https://github.com/rameshbabuvfx/smart_review_tool/stargazers) ![GitHub release](https://img.shields.io/badge/python-3.7+-green) ![GitHub release](https://img.shields.io/badge/python-2-green) ![GitHub release (latest by date)](https://img.shields.io/badge/nuke-11.0+-yellow)
 
-SmartReviewTool is a Markup/Annotaion tool for nuke. This tool helps the artist/reviewers to do markups on image.
+SmartReviewTool is amarkup/annotation tool for nuke. This tool allows artists/reviewers to quickly add markups and add text on images.
 
 This tool has lot of features :
 
@@ -21,9 +21,9 @@ This tool has lot of features :
 * Click on `Eraser` icon to enable eraser to remove the drawn lines on image.
 * Click on `Add Text` button to add text on image.
 * Add color to the text and set the color aswell.
-* To delete the text, press the 'Del' key.
+* To delete the text, press the Del`` key.
 * `Double Click` on the text layer to add text on image.
-* To `Save` image click save button.
+* To `Save` image press on save button.
 
 
 
