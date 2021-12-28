@@ -1,8 +1,22 @@
 # SmartReviewTool
 
-SmartReviewTool is a Markup/Annotaion tool for nuke. This tool helps the artist/reviewers to do markups on image.
+SmartReviewTool is a Markup/Annotaion tool for nuke. This tool helps the artist/reviewers to do markups on image. Easy to draw lines and add test on images and to save image.
 
 ![smart_review_tool](https://user-images.githubusercontent.com/73053972/138094526-6b44b660-5065-4c57-80d7-c1d34964606b.png)
+
+## How to use
+
+* The Smart Review tool has been added to the pane menu.
+* To start the tool, click the SmartReview menu option.
+* Import image pick the color for pen and draw on image
+* Click on `Eraser` icon to enable eraser to remove the drawn lines on image.
+* Click on `Add Text` button to add text on image.
+* Add color to the text and set the color aswell.
+* To delete the text, press the 'Del' key.
+* `Double Click` on the text layer to add text on image.
+* To `Save` image click save button.
+
+
 
 ## Installation
 
@@ -17,7 +31,7 @@ https://github.com/rameshbabuvfx/smart_review_tool.git
 * add this line of code in init.py file.
 
 ```
-nuke.pluginAddPath("C:/Users/yourname/.nuke/smart_review_tool")
+nuke.pluginAddPath("C:/Users/username/.nuke/smart_review_tool")
 ```
 
 * Launch/Restart Nuke.
