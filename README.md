@@ -13,21 +13,9 @@ This tool has lot of features :
 * Change Font style/size.
 * Deleting added text etc.
 
+## Screenshot
+
 ![smart_review_tool](https://user-images.githubusercontent.com/73053972/138094526-6b44b660-5065-4c57-80d7-c1d34964606b.png)
-
-## How to use
-
-* The Smart Review tool has been added to the pane menu.
-* To start the tool, click the SmartReview menu option.
-* Import image pick the color for pen and draw on image
-* Click on `Eraser` icon to enable eraser to remove the drawn lines on image.
-* Click on `Add Text` button to add text on image.
-* Add color to the text and set the color aswell.
-* To delete the text, press the Del`` key.
-* `Double Click` on the text layer to add text on image.
-* To `Save` image press on save button.
-
-
 
 ## Installation
 
@@ -47,5 +35,19 @@ nuke.pluginAddPath("C:/Users/username/.nuke/smart_review_tool")
 
 * Launch/Restart Nuke.
 
+## How to use
 
+* The Smart Review tool has been added to the pane menu.
+* To start the tool, click the SmartReview menu option.
+* Import image pick the color for pen and draw on image
+* Click on `Eraser` icon to enable eraser to remove the drawn lines on image.
+* Click on `Add Text` button to add text on image.
+* Add color to the text and set the color aswell.
+* To delete the text, press the Del`` key.
+* `Double Click` on the text layer to add text on image.
+* To `Save` image press on save button.
+
+```
+Enjoy the tool 😄
+```
 
