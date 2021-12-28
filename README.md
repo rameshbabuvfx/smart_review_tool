@@ -1,6 +1,13 @@
 # SmartReviewTool
 
-SmartReviewTool is a Markup/Annotaion tool for nuke. This tool helps the artist/reviewers to do markups on image. Easy to draw lines and add test on images and to save image.
+SmartReviewTool is a Markup/Annotaion tool for nuke. This tool helps the artist/reviewers to do markups on image.
+
+This tool has lot of features.
+
+* Drawing lines.
+* Adding text.
+* Erasing drawn lines.
+* Change Font Style/Size etc.
 
 ![smart_review_tool](https://user-images.githubusercontent.com/73053972/138094526-6b44b660-5065-4c57-80d7-c1d34964606b.png)
 
