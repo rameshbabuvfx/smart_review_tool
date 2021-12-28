@@ -7,9 +7,11 @@ SmartReviewTool is a markup/annotation tool for nuke. This tool allows artists/r
 This tool has lot of features :
 
 * Drawing lines.
-* Adding text.
+* Change pen color/size.
 * Erasing drawn lines.
-* Change Font Style/Size etc.
+* Adding text.
+* Change Font style/size.
+* Deleting added text etc.
 
 ![smart_review_tool](https://user-images.githubusercontent.com/73053972/138094526-6b44b660-5065-4c57-80d7-c1d34964606b.png)
 
