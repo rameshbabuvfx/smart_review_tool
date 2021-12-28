@@ -1,5 +1,8 @@
 # SmartReviewTool
 
+[![GitHub stars](https://img.shields.io/github/stars/rameshbabuvfx/smart_review_tool)](https://github.com/rameshbabuvfx/smart_review_tool/stargazers) ![GitHub release](https://img.shields.io/badge/python-3.7+-green) ![GitHub release (latest by date)](https://img.shields.io/badge/nuke-11.0+-yellow)
+
+
 SmartReviewTool is a Markup/Annotaion tool for nuke. This tool helps the artist/reviewers to do markups on image.
 
 This tool has lot of features :
